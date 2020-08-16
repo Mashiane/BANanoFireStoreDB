@@ -74,15 +74,15 @@ Sub BANano_Ready()
 	
 	fb.Initialize
 	'use your own credentials
-	fb.apiKey = "AIzaSyCa7V4YUi4S-JFoj2AD_kXSNXaiFWLa-M8"
-	fb.authDomain = "bananovuetify.firebaseapp.com"
-	fb.databaseURL = "https://bananovuetify.firebaseio.com"
-	fb.projectId = "bananovuetify"
-	fb.storageBucket = "bananovuetify.appspot.com"
-	fb.messagingSenderId = "1066403572565"
-	fb.appId = "1:1066403572565:web:13d75ba877f98e9f515ddc"
-	fb.measurementId = "G-YCPQK2RS4W"
-
+	
+	fb.apiKey = "AIzaSyDBijdfdG3KPx7qd5-jDGrRNr2RRXWS57o"
+	fb.authDomain = "fbtests-f9490.firebaseapp.com"
+	fb.databaseURL = "https://fbtests-f9490.firebaseio.com"
+	fb.projectId = "fbtests-f9490"
+	fb.storageBucket = "fbtests-f9490.appspot.com"
+	fb.messagingSenderId = "905575318254"
+	fb.appId = "1:905575318254:web:fb5c35cdc13288aeb329ff"
+	fb.measurementId = "G-41GS0509JY"
 	'
 	Log("Connect to firebase...")
 	fb.connect
@@ -242,9 +242,16 @@ Sub BANano_Ready()
 	
 End Sub
 
-Sub onSnapshot(doc As Map)
-	Log("onSnapshot firing...")
-	'get all documents
-	Dim recs As List = fb.FromJSON(doc)
-	Log(recs)
+Sub onSnapshot(snapShot As Map)
+	'get changes when they happen
+	Dim changes As List = fb.DocChanges(snapShot)
+	For Each item As Map In changes
+		'what is the change type
+		Dim changetype As String = fb.getChangeType(item)
+		Select Case changetype
+		Case fb.FB_ADDED
+		Case fb.FB_REMOVED
+		Case fb.FB_MODIFIED
+		End Select
+	Next
 End Sub

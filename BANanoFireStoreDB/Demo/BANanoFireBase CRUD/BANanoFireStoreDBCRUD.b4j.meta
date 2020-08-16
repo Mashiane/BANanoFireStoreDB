@@ -1,6 +1,6 @@
 ﻿ModuleBookmarks0=
 ModuleBreakpoints0=
 ModuleClosedNodes0=
-NavigationStack=Main,AppStart,46,0,Main,Application_Error,57,0,Main,Process_Globals,14,1,Main,onSnapshot,232,6,Main,BANano_Ready,226,6
+NavigationStack=Main,Application_Error,57,0,Main,Process_Globals,10,1,Main,AppStart,40,0,Main,BANano_Ready,231,6,Main,onSnapshot,244,6
 SelectedBuild=0
 VisibleModules=
