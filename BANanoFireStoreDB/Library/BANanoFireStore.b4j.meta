@@ -4,6 +4,6 @@ ModuleBreakpoints0=
 ModuleBreakpoints1=
 ModuleClosedNodes0=
 ModuleClosedNodes1=
-NavigationStack=BANanoFireStoreDB,signInWithPopupTwitter,112,0,BANanoFireStoreDB,signInWithPopupGithub,118,0,BANanoFireStoreDB,signInAnonymously,127,0,BANanoFireStoreDB,getAccessToken,122,0,BANanoFireStoreDB,collectionGetAll,258,0,BANanoFireStoreDB,getUser,204,0,BANanoFireStoreDB,GetUserData,491,0,BANanoFireStoreDB,getUID,494,6,BANanoFireStoreDB,collectionGet,263,0,BANanoFireStoreDB,readUser,268,0
+NavigationStack=BANanoFireStoreDB,signInWithPopupFacebook,109,0,BANanoFireStoreDB,getAccessToken,129,0,BANanoFireStoreDB,signInAnonymously,136,0,BANanoFireStoreDB,enablePersistence,173,0,BANanoFireStoreDB,getAuth,189,0,BANanoFireStoreDB,onSnapshot,146,0,BANanoFireStoreDB,SetOnSnapShot,151,0,BANanoFireStoreDB,onAuthStateChanged,162,0,BANanoFireStoreDB,timestampsInSnapshots,164,0,BANanoFireStoreDB,docChanges,348,0,BANanoFireStoreDB,FromJSON,333,0
 SelectedBuild=0
 VisibleModules=
