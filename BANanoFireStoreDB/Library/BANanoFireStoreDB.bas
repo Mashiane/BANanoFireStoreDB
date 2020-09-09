@@ -240,6 +240,12 @@ Sub collectionUpdate(Collection As String, colID As String, record As Map) As BA
 	Return promAdd
 End Sub
 
+'update a single record
+Sub collectionUpdateRecord(rec As BANanoObject, record As Map) As BANanoPromise
+	Dim promAdd As BANanoPromise = rec.RunMethod("update", Array(record))
+	Return promAdd
+End Sub
+
 'delete a record using a primary autoincrement id
 Sub collectionDelete(Collection As String, colID As String) As BANanoPromise
 	'execute the update
@@ -248,8 +254,8 @@ Sub collectionDelete(Collection As String, colID As String) As BANanoPromise
 End Sub
 
 'get all records
-Sub collectionGetAll(collection As String, sOrderBy As String) As BANanoPromise
-	Dim boTable As BANanoObject = getCollection(collection)
+Sub collectionGetAll(Collection As String, sOrderBy As String) As BANanoPromise
+	Dim boTable As BANanoObject = getCollection(Collection)
 	If sOrderBy <> "" Then
 		If sOrderBy.IndexOf(" ") = -1 Then
 			boTable = boTable.RunMethod("orderBy", Array(sOrderBy, "asc"))
@@ -582,14 +588,48 @@ Sub getUID(userData As Map) As String
 	Return suid
 End Sub
 
+'get current user UID
+Sub getCurrentUID As String
+	'get the current user
+	Dim user As Map = getCurrentUser
+	'get the user id
+	Dim uid As String = user.Get("uid")
+	Return uid
+End Sub
+
 'get a reference to a realtime collection
-Sub getRef(refName As String) As BANanoObject
+Sub getDatabaseRef(refName As String) As BANanoObject
 	Dim bo As BANanoObject = database.RunMethod("ref", Array(refName))
 	Return bo
 End Sub
 
 'push to a ref a record
-Sub push(refName As String, record As Map)
-	Dim tbl As BANanoObject = getRef(refName)
-	tbl.RunMethod("push", Array(record))
+Sub DatabasePush(refName As String, record As Map) As BANanoPromise
+	Dim tbl As BANanoObject = getDatabaseRef(refName)
+	Dim bp As BANanoPromise = tbl.RunMethod("push", Array(record))
+	Return bp
+End Sub
+
+'get a reference to a storage path
+Sub getStorageRef(refName As String) As BANanoObject
+	Dim bo As BANanoObject = storage.RunMethod("ref", Array(refName))
+	Return bo
+End Sub
+
+'put a file to storage 
+Sub StoragePut(refName As String, fo As Map) As BANanoPromise
+	Dim tbl As BANanoObject = getStorageRef(refName)
+	Dim bp As BANanoPromise = tbl.RunMethod("put", Array(fo))
+	Return bp
+End Sub
+
+'get the storage URI
+Sub getStorageURI(snapShot As BANanoObject) As String
+	Dim sURI As String = snapShot.GetField("metadata").GetField("fullPath").Result
+	Return sURI
+End Sub
+
+Sub getDownloadURL(snapShot As BANanoObject) As BANanoPromise
+	Dim bp As BANanoPromise = snapShot.getfield("ref").RunMethod("getDownloadURL", Null)
+	Return bp
 End Sub
