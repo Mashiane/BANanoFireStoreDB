@@ -369,6 +369,22 @@ Sub docChanges(snapShot As Map) As List
 	Return recs
 End Sub
 
+'set on each doc change
+Sub SetOnDocChanges(snapShot As Map, Module As Object, methodName As String)
+	methodName = methodName.ToLowerCase
+	Dim xDocChanges As BANanoObject = snapShot
+	Dim changes As List = xDocChanges.RunMethod("docChanges",Null).Result
+	For Each recx As BANanoObject In changes
+		Dim stype As String = recx.GetField("type").Result
+		Dim doc As BANanoObject = recx.GetField("doc")
+		Dim rdata As Map = doc.RunMethod("data", Null).Result
+		Dim uid As String = doc.Getfield("id").Result
+		rdata.Put("changetype", stype)
+		rdata.Put("id", uid)
+		BANano.CallSub(Module, methodName, Array(rdata))
+	Next
+End Sub
+
 Sub IsRemoved(m As Map) As Boolean
 	Dim ct As String = getChangeType(m)
 	If ct = "removed" Then Return True
