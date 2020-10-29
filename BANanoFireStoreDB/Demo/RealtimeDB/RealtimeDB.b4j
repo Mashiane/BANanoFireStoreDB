@@ -83,122 +83,39 @@ Sub BANano_Ready()
 	fb.messagingSenderId = "905575318254"
 	fb.appId = "1:905575318254:web:fb5c35cdc13288aeb329ff"
 	fb.measurementId = "G-41GS0509JY"
-	fb.timestampsInSnapshots
 	'
 	Log("Connect to firebase...")
 	fb.connect
-	'
-	'detect onAuthStateChanged
-	fb.onAuthStateChanged(Me, "onAuthStateChanged")
-	'
-	'sign with google popup
-'	Dim googleR As Map
-'	Dim googleE As Map
-'	Dim googleSign As BANanoPromise = fb.signInWithPopupGoogle
-'	googleSign.Then(googleR)
-'	Log("signInWithPopupGoogle")
-'	'get the token
-'	Dim token As String = fb.getAccessToken(googleR)
-'	Log($"token: ${token}"$)
-'	Dim usr As Map = fb.getUser(googleR)
-'	usr = fb.GetUserData(usr)
-'	Log(usr)
-'	googleSign.Else(googleE)
-'	Log(fb.getMessage(googleE))
-'	googleSign.End
 	
-	'register a new user (enable authentication)
-	Dim regResponse As Map
-	Dim regError As Map
-	Dim reguser As BANanoPromise = fb.CreateUserWithEmailAndPassword("mbanga.anele@gmail.com", "userxyz")
-	reguser.ThenWait(regResponse)
-	Log("CreateUserWithEmailAndPassword")
-	'get the user from the credentials
-	Dim user As Map = fb.getUser(regResponse)
-	'get the user id
-	Dim uid As String = fb.getUID(user)
-	'read the user from users collection
-	Dim ur As Map
-	Dim ue As Map
-	Dim pu As BANanoPromise = fb.readUser(uid)
-	pu.ThenWait(ur)
-	Log("readUser")
-	Log(ur)
-	pu.ElseWait(ue)
-	Log(fb.getMessage(ue))
-	pu.end
-	'get the user details
-	'Dim userData As Map = fb.GetUserData(user)
-	'Log(userData)
-	'update display name
-	'Dim uu As Map
-	'Dim ue As Map
-	'Dim ud As BANanoPromise = fb.updateDisplayName(regResponse, "Anele Mbanga")
-	'ud.Then(uu)
-	'Log("updateDisplayName")
-	'Log(uu)
-	'ud.Else(ue)
-	'Log(fb.getMessage(ue))
-	'ud.End
-	
-	'get the user
-	'Dim usr As Map = fb.getUser(regResponse)
-	'get the user details
-	'usr = fb.GetUserData(usr)
-	'Log(usr)
-	reguser.ElseWait(regError)
-	Dim strError As String = fb.getMessage(regError)
-	Log(strError)
-	reguser.End
+	'push a record
+	Dim rec As Map = CreateMap()
+	Dim recid As String = DateTime.Now
+	rec.Put("id", recid)
+	rec.Put("firstname", "Anele")
+	rec.Put("lastname", "Mbanga")
+	fb.push("players", rec)
 	
 	'sign in
-	'Dim sres As Map
-	'Dim serr As Map
-	'Dim signIn As BANanoPromise = fb.signInWithEmailAndPassword("mbanga.anele@gmail.com", "userxyz")
-	'signIn.Then(sres)
-	'Log("signInWithEmailAndPassword")
-	'Log(sres)
-	'signIn.Else(serr)
-	'Log(fb.getMessage(serr))
-	'signIn.end
-	'
-	'sendEmailVerification
-	'Dim eRes As Map
-	'Dim eErr As Map
-	'Dim sendEmail As BANanoPromise = fb.sendEmailVerification
-	'sendEmail.Then(eRes)
-	'Log(eRes)
-	'sendEmail.Else(eErr)
-	'Log(fb.getMessage(eErr))
-	'sendEmail.end
-	'
+	'Dim res As Map
+	'Dim err As Map
+	'Dim signIn As BANanoPromise = fb.signInWithPopupGoogle
+	'signIn.Then(res)
+	'Dim user As Map = fb.getSignedInUserDetails(res)
+	'Log(user)
+	'is signed if
+	'signIn.Else(err)
+	'signIn.End
 	
-	'send password rest email
-	'Dim pRes As Map
-	'Dim pErr As Map
-	'Dim prEmail As BANanoPromise = fb.sendPasswordResetEmail("mbanga.anele@gmail.com")
-	'prEmail.Then(pRes)
-	'Log(pRes)
-	'prEmail.Else(pErr)
-	'Log(fb.getMessage(pErr))
-	'prEmail.End
-	'
+	Log(fb.CurrentUser)
 	
-	'sign out
-	'Dim oRes As Map
-	'Dim oErr As Map
-	'Dim signOut As BANanoPromise = fb.signOut
-	'signOut.Then(oRes)
-	'Log("signOut")
-	'Log(oRes)
-	'signOut.Else(oErr)
-	'Log(fb.getMessage(oErr))
-	'signOut.end
+	
+	'Dim res As Map
+	'Dim err As Map
+	'Dim bp As BANanoPromise = fb.getCurrentUser
+	'bp.Then(res)
+	'Log("*** current user ***")
+	'Log(res)
+	'bp.ELse(err)
+	'bp.End
 End Sub
 
-
-Sub onAuthStateChanged(user As Map)
-	'Log("onAuthStateChanged")
-	'Dim usr As Map = fb.GetUserData(user)
-	'Log(usr)
-End Sub
